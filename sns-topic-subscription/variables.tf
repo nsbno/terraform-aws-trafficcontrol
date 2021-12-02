@@ -29,3 +29,13 @@ variable "fifo_queue" {
   type    = bool
   default = false
 }
+
+variable "enable_dlq" {
+  type    = bool
+  default = false
+}
+
+variable "max_receive_count" {
+  type    = number
+  default = 3
+}
