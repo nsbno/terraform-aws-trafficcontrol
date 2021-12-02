@@ -18,9 +18,15 @@ resource "aws_sqs_queue" "sqs_queue" {
 }
 
 resource "aws_sqs_queue" "sqs_queue_dlq" {
-  count = var.enable_dql ? 1 : 0
-  name = "${var.queue_name}-DLQ"
-  message_retention_seconds = var.message_retention_seconds * 10
+  count                      = var.enable_dql ? 1 : 0
+  name                       = "${var.queue_name}-DLQ"
+  delay_seconds              = var.delay_seconds
+  max_message_size           = var.max_message_size
+  receive_wait_time_seconds  = var.receive_wait_time_seconds
+  visibility_timeout_seconds = var.visibility_timeout_seconds
+  fifo_queue                 = var.fifo_queue
+  message_retention_seconds  = var.message_retention_seconds * 10
+  tags                       = var.tags
 }
 
 
