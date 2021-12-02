@@ -30,7 +30,7 @@ variable "fifo_queue" {
   default = false
 }
 
-variable "enable_dql" {
+variable "enable_dlq" {
   type    = bool
   default = false
 }

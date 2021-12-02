@@ -11,14 +11,14 @@ resource "aws_sqs_queue" "sqs_queue" {
   visibility_timeout_seconds = var.visibility_timeout_seconds
   fifo_queue                 = var.fifo_queue
   tags                       = var.tags
-  redrive_policy = var.enable_dql ? jsonencode({
+  redrive_policy = var.enable_dlq ? jsonencode({
     deadLetterTargetArn = aws_sqs_queue.sqs_queue_dlq[0].arn
     maxReceiveCount     = var.max_receive_count
   }) : null
 }
 
 resource "aws_sqs_queue" "sqs_queue_dlq" {
-  count                      = var.enable_dql ? 1 : 0
+  count                      = var.enable_dlq ? 1 : 0
   name                       = "${var.queue_name}-DLQ"
   delay_seconds              = var.delay_seconds
   max_message_size           = var.max_message_size
