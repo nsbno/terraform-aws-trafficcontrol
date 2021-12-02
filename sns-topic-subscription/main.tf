@@ -12,7 +12,7 @@ resource "aws_sqs_queue" "sqs_queue" {
   fifo_queue                 = var.fifo_queue
   tags                       = var.tags
   redrive_policy = var.enable_dql ? jsonencode({
-    deadLetterTargetArn = aws_sqs_queue.sqs_queue_dlq.arn
+    deadLetterTargetArn = aws_sqs_queue.sqs_queue_dlq[0].arn
     maxReceiveCount     = var.max_receive_count
   }) : null
 }
