@@ -19,3 +19,13 @@ a topic subscription to the given topic. Adds iam policy to allow sns to send me
 Json encoded filter_policy for the subscription is optional.
 
 Returns the arn, id and name of the newly create sqs queue.
+
+## rds-provisioning
+Creates a database and role in the given RDS instance from the parameters: database name, username.
+The RDS instance identifier specifies which RDS instance the resources should be created in.
+
+#### Prerequisites
+This module requires the following to be available in the AWS context:
+* An RDS instance with the identifier: `{rds_instance_id}`
+* A lambda function with name `{name_prefix}-rds-provisioning` used to access the RDS instance.
+* An SSM parameter with name `{rds_instance_id}-rds-master-password` containing the master password of the RDS instance. 
