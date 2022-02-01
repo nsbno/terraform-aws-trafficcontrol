@@ -29,3 +29,6 @@ This module requires the following to be available in the AWS context:
 * An RDS instance with the identifier: `{rds_instance_id}`
 * A lambda function with name `{name_prefix}-rds-provisioning` used to access the RDS instance.
 * An SSM parameter with name `{rds_instance_id}-rds-master-password` containing the master password of the RDS instance. 
+
+## sns-topic
+Creates a topic and gives the external subscribers permission to create topic subscriptions to this topic
