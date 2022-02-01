@@ -1,6 +1,3 @@
-data "aws_sns_topic" "topic" {
-  name = var.topic_name
-}
 
 resource "aws_sqs_queue" "sqs_queue" {
   name                       = var.queue_name
@@ -34,7 +31,7 @@ resource "aws_sns_topic_subscription" "topic_subscription" {
   endpoint             = aws_sqs_queue.sqs_queue.arn
   protocol             = "sqs"
   raw_message_delivery = true
-  topic_arn            = data.aws_sns_topic.topic.arn
+  topic_arn            = var.sns_topic_arn
   filter_policy        = length(var.filter_policy) > 0 ? var.filter_policy : null
 }
 
