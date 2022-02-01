@@ -1,5 +1,4 @@
 variable "queue_name" {}
-variable "topic_name" {}
 variable "tags" {}
 variable "filter_policy" {
   type    = string
@@ -38,4 +37,8 @@ variable "enable_dlq" {
 variable "max_receive_count" {
   type    = number
   default = 3
+}
+
+variable "sns_topic_arn" {
+  type = string
 }
