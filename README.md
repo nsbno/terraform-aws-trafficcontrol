@@ -32,3 +32,6 @@ This module requires the following to be available in the AWS context:
 
 ## sns-topic
 Creates a topic and gives the external subscribers permission to create topic subscriptions to this topic
+
+## sqs-queue
+Creates an sqs queue with support for enabling a dead letter queue.
