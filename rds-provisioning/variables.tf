@@ -41,10 +41,12 @@ variable "master_username" {
   type = string
   description = "Database master username"
   default = ""
+  sensitive = true
 }
 
 variable "master_password" {
   type = string
   description = "Database master password"
   default = ""
+  sensitive = true
 }
