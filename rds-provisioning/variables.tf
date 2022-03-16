@@ -22,3 +22,18 @@ variable "password" {
   type = string
   description = "Password for database user"
 }
+
+variable "master_username" {
+  type = string
+  description = "Database master username"
+}
+
+variable "address" {
+  type = string
+  description = "The address for database"
+}
+
+variable "port" {
+  type = string
+  description = "The port for the database"
+}
