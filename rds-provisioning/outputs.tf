@@ -1,6 +1,6 @@
 output "endpoint" {
   description = "Endpoint to RDS"
-  value       = data.aws_db_instance.rds.endpoint
+  value       = local.database_address
 }
 
 output "database" {
