@@ -6,7 +6,7 @@ locals {
   port = var.rds_instance_id != null ? data.aws_db_instance.rds[0].port : var.port
   database_address = var.rds_instance_id != null ? data.aws_db_instance.rds[0].address : var.address
   master_username = var.rds_instance_id != null ? data.aws_db_instance.rds[0].master_username : var.master_username
-  master_password = var.rds_instance_id != null ? data.aws_db_instance.rds[0].master_username : var.master_password
+  master_password = var.rds_instance_id != null ? data.aws_ssm_parameter.rds_master_password[0].value : var.master_password
 }
 
 # Get RDS instance
