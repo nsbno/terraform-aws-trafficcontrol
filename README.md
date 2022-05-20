@@ -31,7 +31,15 @@ This module requires the following to be available in the AWS context:
 * An SSM parameter with name `{rds_instance_id}-rds-master-password` containing the master password of the RDS instance. 
 
 ## sns-topic
-Creates a topic and gives the external subscribers permission to create topic subscriptions to this topic
+Creates a topic and gives the external subscribers permission to create topic subscriptions to this topic.
+Can also be configured to log all published messages to s3 via kinesis firehose.
+
+## sns-to-s3-firehose
+Module that creates a kinesis firehose delivery stream, and sets up a sns role for sns so it can be used to publish
+all messages to this stream which then saves all messages to s3 and makes them ready for querying in Athena using a 
+glue crawler and table.
+Crawler is set ut to run every 3 hours, and s3 bucket used for storing published messages have a bucket retetion period
+of 30 days.
 
 ## sqs-queue
 Creates an sqs queue with support for enabling a dead letter queue.
