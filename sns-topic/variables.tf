@@ -15,7 +15,7 @@ variable "current_account" {
 }
 
 variable "external_subscribers" {
-  description = "A list of accountnumbers that are allowed to create topic subscriptions"
+  description = "A list of account numbers that are allowed to create topic subscriptions"
   type        = list(string)
 }
 
