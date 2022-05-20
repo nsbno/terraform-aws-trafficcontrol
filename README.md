@@ -40,3 +40,6 @@ all messages to this stream which then saves all messages to s3 and makes them r
 glue crawler and table.
 Crawler is set ut to run every 3 hours, and s3 bucket used for storing published messages have a bucket retetion period
 of 30 days.
+
+## sqs-queue
+Creates an sqs queue with support for enabling a dead letter queue.
