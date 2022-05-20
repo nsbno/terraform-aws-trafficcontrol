@@ -25,7 +25,7 @@ variable "enable_logging_of_published_messages" {
   default     = false
 }
 
-variable kinesis_firehose_delivery_stream_name {
+variable "kinesis_firehose_delivery_stream_name" {
   type    = string
   default = ""
 }
