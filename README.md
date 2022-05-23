@@ -41,5 +41,9 @@ glue crawler and table.
 Crawler is set ut to run every 3 hours, and s3 bucket used for storing published messages have a bucket retetion period
 of 30 days.
 
+## sns-firehose-subscription
+Module for enabling logging av all published messages to s3 via firehose.
+Requires an iam role for sns and a firehose delivery stream.
+
 ## sqs-queue
 Creates an sqs queue with support for enabling a dead letter queue.
