@@ -7,8 +7,8 @@ data "aws_iam_role" "sns_to_kinesis_role" {
 }
 
 resource "aws_sns_topic_subscription" "firehose_topic_subscription" {
-  endpoint              = data.aws_kinesis_firehose_delivery_stream.firehose_delivery_stream[0].arn
+  endpoint              = data.aws_kinesis_firehose_delivery_stream.firehose_delivery_stream.arn
   protocol              = "firehose"
-  subscription_role_arn = data.aws_iam_role.sns_to_kinesis_role[0].arn
+  subscription_role_arn = data.aws_iam_role.sns_to_kinesis_role.arn
   topic_arn             = var.sns_topic_arn
 }
