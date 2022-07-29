@@ -47,3 +47,6 @@ Requires an iam role for sns and a firehose delivery stream.
 
 ## sqs-queue
 Creates an sqs queue with support for enabling a dead letter queue.
+
+## oidc-role
+Creates an iam-role with policies using a configured OIDC provider to authenticate with OIDC.
