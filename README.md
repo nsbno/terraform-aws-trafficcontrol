@@ -49,4 +49,9 @@ Requires an iam role for sns and a firehose delivery stream.
 Creates an sqs queue with support for enabling a dead letter queue.
 
 ## oidc-role
-Creates an iam-role with policies using a configured OIDC provider to authenticate with OIDC.
+Creates an iam-role using a configured OIDC provider to authenticate with OIDC.
+
+* Role name is "**github_actions_assume_role**"
+* S3 and ECR access can be configured in the corresponding variables.
+
+The role ARN is used for Github Actions as credentials for AWS.
