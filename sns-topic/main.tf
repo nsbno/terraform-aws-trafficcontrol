@@ -5,6 +5,7 @@ resource "aws_sns_topic" "sns_topic" {
 }
 
 resource "aws_sns_topic_policy" "sns_topic_policy" {
+  count = length(var.external_subscribers) > 0 ? 1 : 0
   arn = aws_sns_topic.sns_topic.arn
   policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
