@@ -17,6 +17,7 @@ resource "aws_sns_topic_subscription" "topic_subscription" {
   raw_message_delivery = true
   topic_arn            = var.sns_topic_arn
   filter_policy        = length(var.filter_policy) > 0 ? var.filter_policy : null
+  count                = var.enable_subscription ? 1 : 0
 }
 
 data "aws_iam_policy_document" "iam_policy_document" {
