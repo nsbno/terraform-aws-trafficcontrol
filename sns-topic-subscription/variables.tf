@@ -39,6 +39,11 @@ variable "max_receive_count" {
   default = 3
 }
 
+variable "enable_subscription" {
+  type    = bool
+  default = true
+}
+
 variable "sns_topic_arn" {
   type = string
 }
