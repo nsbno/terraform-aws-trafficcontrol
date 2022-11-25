@@ -52,3 +52,33 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     resources = [aws_sns_topic.sns_topic.arn]
   }
 }
+
+resource "aws_s3_bucket" "large_message_payload" {
+  count = var.create_payload_bucket == true ? 1 : 0
+  bucket = var.payload_bucket_name
+}
+
+resource "aws_s3_bucket_policy" "allow_external_read" {
+  count = var.create_payload_bucket && length(var.external_subscribers) > 0 ? 1 : 0
+  bucket = aws_s3_bucket.large_message_payload.id
+  policy = data.aws_iam_policy_document.allow_external_read.json
+}
+
+data "aws_iam_policy_document" "allow_external_read" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = var.external_subscribers
+    }
+
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      aws_s3_bucket.large_message_payload.arn,
+      "${aws_s3_bucket.large_message_payload.arn}/*",
+    ]
+  }
+}
