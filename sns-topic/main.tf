@@ -60,7 +60,7 @@ resource "aws_s3_bucket" "large_message_payload" {
 
 resource "aws_s3_bucket_policy" "allow_external_read" {
   count = var.create_payload_bucket && length(var.external_subscribers) > 0 ? 1 : 0
-  bucket = aws_s3_bucket.large_message_payload.id
+  bucket = aws_s3_bucket.large_message_payload[0].id
   policy = data.aws_iam_policy_document.allow_external_read.json
 }
 
