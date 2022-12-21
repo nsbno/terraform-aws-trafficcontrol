@@ -77,8 +77,8 @@ data "aws_iam_policy_document" "allow_external_read" {
     ]
 
     resources = [
-      aws_s3_bucket.large_message_payload.arn,
-      "${aws_s3_bucket.large_message_payload.arn}/*",
+      aws_s3_bucket.large_message_payload[0].arn,
+      "${aws_s3_bucket.large_message_payload[0].arn}/*",
     ]
   }
 }
