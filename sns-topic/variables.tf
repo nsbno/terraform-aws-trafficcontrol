@@ -27,4 +27,5 @@ variable "create_payload_bucket" {
 variable "payload_bucket_name" {
   description = "Name of the SNS payload S3-bucket."
   type = string
+  default = ""
 }
