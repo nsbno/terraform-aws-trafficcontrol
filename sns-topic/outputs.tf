@@ -10,10 +10,10 @@ output "topicId" {
 
 output "bucketId" {
   description = "The S3-bucket ID created in this module."
-  value = aws_s3_bucket.large_message_payload.id
+  value = aws_s3_bucket.large_message_payload[0].id
 }
 
 output "bucketArn" {
   description = "The S3-bucket ARN created in this module."
-  value = aws_s3_bucket.large_message_payload.arn
+  value = aws_s3_bucket.large_message_payload[0].arn
 }
