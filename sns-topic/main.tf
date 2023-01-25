@@ -58,6 +58,18 @@ resource "aws_s3_bucket" "large_message_payload" {
   bucket = var.payload_bucket_name
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "large_messages_bucket_lifecycle_configuration" {
+  count = var.use_s3_bucket_lifecycle == true ? 1 : 0
+  bucket = aws_s3_bucket.large_message_payload[0].id
+  rule {
+    id     = "object-expiration"
+    status = "Enabled"
+    expiration {
+      days = var.s3_bucket_expiration_days
+    }
+  }
+}
+
 resource "aws_s3_bucket_policy" "allow_external_read" {
   count = var.create_payload_bucket && length(var.external_subscribers) > 0 ? 1 : 0
   bucket = aws_s3_bucket.large_message_payload[0].id
@@ -69,7 +81,7 @@ data "aws_iam_policy_document" "allow_external_read" {
   statement {
     principals {
       type        = "AWS"
-      identifiers = var.external_subscribers
+      identifiers = formatlist("arn:aws:iam::%s:root", var.external_subscribers)
     }
 
     actions = [
