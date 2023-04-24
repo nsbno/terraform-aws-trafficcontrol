@@ -12,6 +12,10 @@ variable "message_retention_seconds" {
   type    = number
   default = 86400
 }
+variable "message_retention_seconds_dlq" {
+  type    = number
+  default = null
+}
 variable "receive_wait_time_seconds" {
   type    = number
   default = 20
