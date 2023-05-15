@@ -13,19 +13,16 @@ output "sqs_queue_name" {
   value       = aws_sqs_queue.sqs_queue.name
 }
 output "sqs_queue_dlq_arn" {
-  count       = var.enable_dlq ? 1 : 0
   description = "The Amazon SQS DLQ arn created in this module"
   value       = aws_sqs_queue.sqs_queue_dlq.arn
 }
 
 output "sqs_queue_dlq_id" {
-  count       = var.enable_dlq ? 1 : 0
   description = "The Amazon SQS DLQ id created in this module"
   value       = aws_sqs_queue.sqs_queue_dlq.id
 }
 
 output "sqs_queue_dlq_name" {
-  count       = var.enable_dlq ? 1 : 0
   description = "The Amazon SQS DLQ name created in this module"
   value       = aws_sqs_queue.sqs_queue_dlq.name
 }
