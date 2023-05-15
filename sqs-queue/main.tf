@@ -21,6 +21,6 @@ resource "aws_sqs_queue" "sqs_queue_dlq" {
   receive_wait_time_seconds  = var.receive_wait_time_seconds
   visibility_timeout_seconds = var.visibility_timeout_seconds
   fifo_queue                 = var.fifo_queue
-  message_retention_seconds  = var.message_retention_seconds * 10
+  message_retention_seconds  = coalesce(var.message_retention_seconds_dlq, var.message_retention_seconds * 10)
   tags                       = var.tags
 }

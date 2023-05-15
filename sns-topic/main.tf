@@ -5,6 +5,7 @@ resource "aws_sns_topic" "sns_topic" {
 }
 
 resource "aws_sns_topic_policy" "sns_topic_policy" {
+  count = length(var.external_subscribers) > 0 ? 1 : 0
   arn = aws_sns_topic.sns_topic.arn
   policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
@@ -49,5 +50,48 @@ data "aws_iam_policy_document" "sns_topic_policy" {
       "SNS:Subscribe"
     ]
     resources = [aws_sns_topic.sns_topic.arn]
+  }
+}
+
+resource "aws_s3_bucket" "large_message_payload" {
+  count = var.create_payload_bucket == true ? 1 : 0
+  bucket = var.payload_bucket_name
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "large_messages_bucket_lifecycle_configuration" {
+  count = var.use_s3_bucket_lifecycle == true ? 1 : 0
+  bucket = aws_s3_bucket.large_message_payload[0].id
+  rule {
+    id     = "object-expiration"
+    status = "Enabled"
+    expiration {
+      days = var.s3_bucket_expiration_days
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "allow_external_read" {
+  count = var.create_payload_bucket && length(var.external_subscribers) > 0 ? 1 : 0
+  bucket = aws_s3_bucket.large_message_payload[0].id
+  policy = data.aws_iam_policy_document.allow_external_read[0].json
+}
+
+data "aws_iam_policy_document" "allow_external_read" {
+  count = var.create_payload_bucket == true ? 1 : 0
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = formatlist("arn:aws:iam::%s:root", var.external_subscribers)
+    }
+
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      aws_s3_bucket.large_message_payload[0].arn,
+      "${aws_s3_bucket.large_message_payload[0].arn}/*",
+    ]
   }
 }
