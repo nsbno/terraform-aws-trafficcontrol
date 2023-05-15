@@ -28,6 +28,15 @@ variable "enable_dlq" {
   type    = bool
   default = false
 }
+variable "enable_dlq_alarm" {
+  type    = bool
+  default = false
+}
+variable "alarm_topic_arn" {
+  description = "Arn to the sns topic that publish alarms"
+  type = string
+  default = ""
+}
 variable "max_receive_count" {
   type    = number
   default = 3
