@@ -10,6 +10,8 @@ module "sqs_queue" {
   fifo_queue                    = var.fifo_queue
   tags                          = var.tags
   enable_dlq                    = var.enable_dlq
+  enable_dlq_alarm              = var.enable_dlq_alarm
+  alarm_topic_arn               = var.alarm_topic_arn
 }
 
 resource "aws_sns_topic_subscription" "topic_subscription" {
