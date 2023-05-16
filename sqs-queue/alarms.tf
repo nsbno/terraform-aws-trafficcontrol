@@ -3,7 +3,7 @@
 ############################################################################################
 resource "aws_cloudwatch_metric_alarm" "dlq_unhealty" {
   count               = var.enable_dlq_alarm ? 1 : 0
-  metric_name         = "NumberOfMessagesReceived"
+  metric_name         = "ApproximateNumberOfMessagesVisible"
   alarm_name          = "${aws_sqs_queue.sqs_queue_dlq[0].name}_unhealty"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
