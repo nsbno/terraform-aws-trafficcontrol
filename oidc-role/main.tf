@@ -79,3 +79,15 @@ resource "aws_iam_role_policy_attachment" "ecr_to_role" {
   policy_arn = aws_iam_policy.ecr.arn
   depends_on = [aws_iam_policy.ecr]
 }
+
+resource "aws_iam_policy" "allow_deployment_service_access" {
+  name = "${var.name_prefix}-oidc-role-allow-deployment-in-service-account"
+  description = "Policy that allows the OIDC role to trigger the deployment lambda in the service account."
+  policy = data.aws_iam_policy_document.allow_deployment_service_access.json
+}
+
+resource "aws_iam_role_policy_attachment" "allow_deployment_service_access" {
+  role = aws_iam_role.oidc_assume_role.id
+  policy_arn = aws_iam_policy.allow_deployment_service_access.arn
+  depends_on = [aws_iam_policy.allow_deployment_service_access]
+}

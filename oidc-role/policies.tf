@@ -56,3 +56,11 @@ data "aws_iam_policy_document" "s3_read_for_oidc_role" {
     resources = concat(var.allowed_s3_read_arns, formatlist("%s/*", var.allowed_s3_read_arns))
   }
 }
+
+data "aws_iam_policy_document" "allow_deployment_service_access" {
+  statement {
+    effect    = "Allow"
+    actions   = ["execute-api:Invoke"]
+    resources = ["*"]
+  }
+}
