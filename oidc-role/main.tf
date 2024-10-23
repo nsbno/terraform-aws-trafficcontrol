@@ -44,6 +44,14 @@ data "aws_iam_policy_document" "oidc_authenticate_policy" {
       variable = "token.actions.githubusercontent.com:sub"
     }
   }
+
+  statement {
+    actions = ["sts:AssumeRole", "sts:AssumeRoleWithWebIdentity", "sts:TagSession"]
+    principals {
+      identifiers = var.roles_to_assume
+      type = "AWS"
+    }
+  }
 }
 
 resource "aws_iam_policy" "s3_write" {

@@ -25,3 +25,9 @@ variable "repository_list" {
     default     = []
     type        = list(string)
 }
+
+variable "roles_to_assume" {
+    description = "A list of roles that the OIDC role can assume"
+    default     = []
+    type        = list(string)
+}
