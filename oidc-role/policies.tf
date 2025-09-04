@@ -70,8 +70,12 @@ data "aws_iam_policy_document" "allow_publish_to_deployment_reporter" {
   version = "2012-10-17"
 
   statement {
-	effect    = "Allow"
-	actions   = ["sns:Publish"]
-	resources = ["*"]
+    effect  = "Allow"
+    actions = ["sns:Publish"]
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.oidc_assume_role.arn]
+    }
+    resources = ["*"]
   }
 }
