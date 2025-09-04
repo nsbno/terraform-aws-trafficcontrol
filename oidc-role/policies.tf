@@ -64,3 +64,14 @@ data "aws_iam_policy_document" "allow_deployment_service_access" {
     resources = ["*"]
   }
 }
+
+data "aws_iam_policy_document" "allow_publish_to_deployment_reporter" {
+  # Needed to publish to SNS topic for deployment reporter (DORA etc.)
+  version = "2012-10-17"
+
+  statement {
+	effect    = "Allow"
+	actions   = ["sns:Publish"]
+	resources = ["*"]
+  }
+}
