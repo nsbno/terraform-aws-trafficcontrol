@@ -14,13 +14,13 @@ locals {
 }
 
 resource "aws_iam_openid_connect_provider" "oidc_provider" {
-  url = "https://token.actions.githubusercontent.com"
-  client_id_list = ["sts.amazonaws.com"]
+  url             = "https://token.actions.githubusercontent.com"
+  client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = local.thumbprint
 }
 
 resource "aws_iam_role" "oidc_assume_role" {
-  name = "github_actions_assume_role"
+  name               = "github_actions_assume_role"
   assume_role_policy = data.aws_iam_policy_document.oidc_authenticate_policy.json
 }
 
@@ -66,31 +66,42 @@ resource "aws_iam_policy" "ecr" {
 }
 
 resource "aws_iam_role_policy_attachment" "s3_write_to_oidc_role" {
-  role = aws_iam_role.oidc_assume_role.id
+  role       = aws_iam_role.oidc_assume_role.id
   policy_arn = aws_iam_policy.s3_write.arn
   depends_on = [aws_iam_policy.s3_write]
 }
 
 resource "aws_iam_role_policy_attachment" "s3_read_to_oidc_role" {
-  role = aws_iam_role.oidc_assume_role.id
+  role       = aws_iam_role.oidc_assume_role.id
   policy_arn = aws_iam_policy.s3_read.arn
   depends_on = [aws_iam_policy.s3_read]
 }
 
 resource "aws_iam_role_policy_attachment" "ecr_to_role" {
-  role = aws_iam_role.oidc_assume_role.id
+  role       = aws_iam_role.oidc_assume_role.id
   policy_arn = aws_iam_policy.ecr.arn
   depends_on = [aws_iam_policy.ecr]
 }
 
 resource "aws_iam_policy" "allow_deployment_service_access" {
-  name = "${var.name_prefix}-oidc-role-allow-deployment-in-service-account"
+  name        = "${var.name_prefix}-oidc-role-allow-deployment-in-service-account"
   description = "Policy that allows the OIDC role to trigger the deployment lambda in the service account."
-  policy = data.aws_iam_policy_document.allow_deployment_service_access.json
+  policy      = data.aws_iam_policy_document.allow_deployment_service_access.json
 }
 
 resource "aws_iam_role_policy_attachment" "allow_deployment_service_access" {
-  role = aws_iam_role.oidc_assume_role.id
+  role       = aws_iam_role.oidc_assume_role.id
   policy_arn = aws_iam_policy.allow_deployment_service_access.arn
   depends_on = [aws_iam_policy.allow_deployment_service_access]
+}
+
+resource "aws_iam_policy" "allow_publish_to_deployment_reporter" {
+  name        = "${var.name_prefix}-oidc-role-deployment-reporter"
+  description = "Policy that allows the OIDC role to publish to the deployment reporter SNS topic."
+  policy      = data.aws_iam_policy_document.allow_publish_to_deployment_reporter.json
+}
+
+resource "aws_iam_role_policy_attachment" "allow_publish_to_deployment_reporter" {
+  role       = aws_iam_role.oidc_assume_role.id
+  policy_arn = aws_iam_policy.allow_publish_to_deployment_reporter.arn
 }
