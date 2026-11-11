@@ -58,6 +58,17 @@ resource "aws_s3_bucket" "large_message_payload" {
   bucket = var.payload_bucket_name
 }
 
+resource "aws_s3_bucket_public_access_block" "large_message_payload" {
+  count = var.create_payload_bucket == true ? 1 : 0
+
+  bucket = aws_s3_bucket.large_message_payload[0].id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
 resource "aws_s3_bucket_lifecycle_configuration" "large_messages_bucket_lifecycle_configuration" {
   count = var.use_s3_bucket_lifecycle == true ? 1 : 0
   bucket = aws_s3_bucket.large_message_payload[0].id
